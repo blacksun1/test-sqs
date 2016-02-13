@@ -1,0 +1,11 @@
+{
+  "dataQueue": {
+    "type": "bs-dataqueue-sqs",
+    "config": {
+      "accessKeyId": "",
+      "secretAccessKey": "",
+      "region": "",
+      "arn": ""
+    }
+  }
+}
