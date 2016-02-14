@@ -4,8 +4,11 @@
     "config": {
       "accessKeyId": "",
       "secretAccessKey": "",
-      "region": "",
-      "arn": ""
+      "region": "eu-west-1",
+      "queueName": "MyDataqueue",
+      "sslEnabled": true,
+      "defaultVisibilityTimeout": 180,
+      "defaultMessageRetentionPeriod": 1209600
     }
   }
 }
