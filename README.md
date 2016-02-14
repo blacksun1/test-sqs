@@ -17,7 +17,9 @@ Not a lot.
 
 Clone it and make sure you have have node 4.3 or higher installed then run.
 
+Make a copy of `config.json.default` to `config.json` and add in your AWS details with a user account that that has full access SQS access.
+
 ```bash
 npm install
-Q_DEBUG=1 node index.js
+npm start
 ```
