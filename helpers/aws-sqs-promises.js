@@ -1,4 +1,4 @@
-"use strict"
+"use strict";
 
 const Q = require("q");
 
@@ -15,15 +15,18 @@ class AwsSqsPromises {
     };
 
     params.Entries = entries.map((entry, index) => {
-      return {"Id": index.toString(), "ReceiptHandle": entry}
+      return {
+        "Id": index.toString(),
+        "ReceiptHandle": entry
+      };
     });
 
     return Q.nfcall(this.SQS_.deleteMessageBatch.bind(this.SQS_), params)
       .tap(data => {
         if (data.Failed.length > 0) {
-          console.error("Some messages failed to be deleted.")
+          console.error("Some messages failed to be deleted.");
         }
-      })
+      });
   }
 
   getQueueAttributes(queueUrl) {
@@ -34,7 +37,7 @@ class AwsSqsPromises {
       ]
     };
 
-    return Q.nfcall(this.SQS_.getQueueAttributes.bind(this.SQS_), params)
+    return Q.nfcall(this.SQS_.getQueueAttributes.bind(this.SQS_), params);
   }
 
   getQueueIdentifier(queueOptions) {
@@ -56,8 +59,10 @@ class AwsSqsPromises {
             return reject(new Error(`Could not get the URL with name ${queueOptions.queueName}. Error is ${err.code}`));
           }
         } else {
-          return resolve({"QueueUrl": data.QueueUrl, "CreatedNew": false});
-          return;
+          return resolve({
+            "QueueUrl": data.QueueUrl,
+            "CreatedNew": false
+          });
         }
       });
     });

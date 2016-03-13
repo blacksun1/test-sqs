@@ -27,7 +27,7 @@ class ServerApp extends BaseApp {
 
   ping() {
     if (this.paused) {
-      console.log("Server paused. Not doing anything at the moment.")
+      console.log("Server paused. Not doing anything at the moment.");
       return;
     }
 
@@ -35,9 +35,9 @@ class ServerApp extends BaseApp {
       .catch(errorCatcher)
       .tap(data => {
         if (typeof data === "undefined" || typeof data.Messages === "undefined") {
-          console.log(`Success! No messages received.`);
+          console.log("Success! No messages received.");
         } else {
-          console.log(`Success! ${data.Messages.length} message${data.Messages.length > 1 ? 's': ''} received.`);
+          console.log(`Success! ${data.Messages.length} message${data.Messages.length > 1 ? "s": ""} received.`);
         }
       })
       .then(data => {
@@ -45,8 +45,8 @@ class ServerApp extends BaseApp {
           return this.awsSqsPromises_.deleteMessageBatch(this.queueUrl_, data.Messages.map(message => message.ReceiptHandle))
             .catch(errorCatcher)
             .tap(data => {
-              console.log(`Success! ${data.Successful.length} message${data.Successful.length > 1 ? 's': ''} deleted.`);
-            })
+              console.log(`Success! ${data.Successful.length} message${data.Successful.length > 1 ? "s": ""} deleted.`);
+            });
         }
 
         console.log("No messages to delete");

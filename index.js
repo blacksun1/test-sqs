@@ -22,7 +22,8 @@ const awsSqsPromises = new AwsSqsPromises(SQS);
 
 let apps = [];
 
-awsSqsPromises.getQueueIdentifier({
+awsSqsPromises.getQueueIdentifier(
+  {
     "QueueName": config.dataQueue.config.queueName,
     "Attributes": {
       "MessageRetentionPeriod": `${config.dataQueue.config.defaultMessageRetentionPeriod}`,
@@ -34,8 +35,8 @@ awsSqsPromises.getQueueIdentifier({
     const queueUrl = data.QueueUrl;
     console.log(`Success! Ready to use Queue at ${queueUrl}.`);
 
-    apps.push(new ClientApp(awsSqsPromises, queueUrl, second))
-    apps.push(new ServerApp(awsSqsPromises, queueUrl, 3 * seconds))
+    apps.push(new ClientApp(awsSqsPromises, queueUrl, second));
+    apps.push(new ServerApp(awsSqsPromises, queueUrl, 3 * seconds));
   })
   .then(data => awsSqsPromises.getQueueAttributes(data.QueueUrl))
   .catch(errorCatcher)

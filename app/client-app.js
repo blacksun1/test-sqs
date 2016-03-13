@@ -17,7 +17,7 @@ class ClientApp extends BaseApp {
       "Spinach is not tasty",
       "Please, try the fish",
       "London loves chicken",
-      "Feed the man meat",
+      "Feed the man meat"
     ];
   }
 
@@ -30,16 +30,14 @@ class ClientApp extends BaseApp {
 
   ping() {
     if (this.paused) {
-      console.log("Client paused. Not doing anything at the moment.")
+      console.log("Client paused. Not doing anything at the moment.");
       return;
     }
 
     const messageBody = this.messages_[Math.floor(Math.random() * this.messages_.length)];
 
     this.awsSqsPromises_.sendMessage(this.queueUrl_, messageBody, 0)
-      .tap(data => {
-        console.log("Success! Placed a new message on the queue.");
-      })
+      .tap(() => console.log("Success! Placed a new message on the queue."))
       .catch(errorCatcher)
       .done();
   }
