@@ -1,5 +1,7 @@
 # test-sqs
 
+![Build status](https://travis-ci.org/blacksun1/test-sqs.svg)
+
 ## What does it do?
 
 Not a lot.
