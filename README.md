@@ -1,6 +1,6 @@
 # test-sqs
 
-![Build status](https://travis-ci.org/blacksun1/test-sqs.svg)
+[![Build status](https://travis-ci.org/blacksun1/test-sqs.svg)](https://travis-ci.org/blacksun1/test-sqs)
 
 ## What does it do?
 
