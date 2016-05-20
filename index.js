@@ -11,8 +11,9 @@ const SQS = new AWS.SQS({
   "region": config.dataQueue.config.region,
   "sslEnabled": config.dataQueue.config.sslEnabled
 });
+
 const second = 1000;
-const seconds = 1000;
+const seconds = second;
 
 const AwsSqsPromises = require("./helpers/aws-sqs-promises");
 const ClientApp = require("./app/client-app");
@@ -20,7 +21,7 @@ const ServerApp = require("./app/server-app");
 
 const awsSqsPromises = new AwsSqsPromises(SQS);
 
-let apps = [];
+const apps = [];
 
 awsSqsPromises.getQueueIdentifier(
   {
@@ -35,14 +36,26 @@ awsSqsPromises.getQueueIdentifier(
     const queueUrl = data.QueueUrl;
     console.log(`Success! Ready to use Queue at ${queueUrl}.`);
 
+    const topicStream = require("sqs-stream");
+    const queueStream = topicStream.createReadStream({
+      "url": queueUrl,
+      "accessKeyId": config.dataQueue.config.accessKeyId,
+      "secretAccessKey": config.dataQueue.config.secretAccessKey,
+      "region": config.dataQueue.config.region
+    });
+
+    // TODO: SSL Should be enabled. Would also be good if this could take an
+    // already created instance of the aws object.
+
     apps.push(new ClientApp(awsSqsPromises, queueUrl, second));
-    apps.push(new ServerApp(awsSqsPromises, queueUrl, 3 * seconds));
+    // apps.push(new ServerApp(awsSqsPromises, queueUrl, 3 * seconds, queueStream));
+    // apps.push(new ServerApp(queueStream, 3 * seconds));
   })
-  .then(data => awsSqsPromises.getQueueAttributes(data.QueueUrl))
+  // .then(data => awsSqsPromises.getQueueAttributes(data.QueueUrl))
   .catch(errorCatcher)
-  .tap(data => {
-    console.log("Success! Got the queue attributes.", data);
-  })
+  // .tap(data => {
+  //   console.log("Success! Got the queue attributes.", data);
+  // })
 
   // Start up all of our applications
   .then(() => Q.all(apps.map(app => app.start())))

@@ -1,32 +1,13 @@
 "use strict";
 
 const Q = require("q");
+// const _ = require("highland");
 
 class AwsSqsPromises {
 
   constructor(SQS) {
     this.SQS_ = SQS;
-  }
-
-  deleteMessageBatch(queueUrl, entries) {
-    const params = {
-      "QueueUrl": queueUrl,
-      "Entries": []
-    };
-
-    params.Entries = entries.map((entry, index) => {
-      return {
-        "Id": index.toString(),
-        "ReceiptHandle": entry
-      };
-    });
-
-    return Q.nfcall(this.SQS_.deleteMessageBatch.bind(this.SQS_), params)
-      .tap(data => {
-        if (data.Failed.length > 0) {
-          console.error("Some messages failed to be deleted.");
-        }
-      });
+    // this.deleteMessageStream = _();
   }
 
   getQueueAttributes(queueUrl) {
@@ -66,6 +47,34 @@ class AwsSqsPromises {
         }
       });
     });
+  }
+
+  deleteMessage(queueUrl, entry) { // eslint-disable-line
+    const deferred = Q.defer();
+    // Now, batch up our requests.
+
+    return deferred.Promise;
+  }
+
+  deleteMessageBatch(queueUrl, entries) {
+    const params = {
+      "QueueUrl": queueUrl,
+      "Entries": []
+    };
+
+    params.Entries = entries.map((entry, index) => {
+      return {
+        "Id": index.toString(),
+        "ReceiptHandle": entry
+      };
+    });
+
+    return Q.nfcall(this.SQS_.deleteMessageBatch.bind(this.SQS_), params)
+      .tap(data => {
+        if (data.Failed.length > 0) {
+          console.error("Some messages failed to be deleted.");
+        }
+      });
   }
 
   receiveMessages(queueUrl, maxNumberOfMessages) {

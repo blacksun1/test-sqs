@@ -6,9 +6,9 @@ class BaseApp {
     throw new Error("Not implemented");
   }
 
-  ping() {
-    throw new Error("Not implemented");
-  }
+  // ping() {
+  //   throw new Error("Not implemented");
+  // }
 
   pause() {
     throw new Error("Not implemented");

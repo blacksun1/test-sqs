@@ -11,7 +11,9 @@
   "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.2.35",
+    "aws-sqs-stream": "^0.1.0",
     "boxen": "^0.3.1",
+    "memory-stream": "0.0.3",
     "q": "^1.4.1"
   },
   "devDependencies": {
