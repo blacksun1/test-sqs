@@ -1,9 +1,16 @@
 "use strict";
 
-const Q = require("q");
-const config = require("./config.json");
+// Includes
+
 const AWS = require("aws-sdk");
+const AwsSqsPromises = require("./helpers/aws-sqs-promises");
+const ClientApp = require("./app/client-app");
+const config = require("./config.json");
 const errorCatcher = require("./helpers/error-catcher");
+const Q = require("q");
+// const ServerApp = require("./app/server-app");
+
+
 const SQS = new AWS.SQS({
   "apiVersion": "2016-02-13",
   "accessKeyId": config.dataQueue.config.accessKeyId,
@@ -15,9 +22,6 @@ const SQS = new AWS.SQS({
 const second = 1000;
 const seconds = second;
 
-const AwsSqsPromises = require("./helpers/aws-sqs-promises");
-const ClientApp = require("./app/client-app");
-const ServerApp = require("./app/server-app");
 
 const awsSqsPromises = new AwsSqsPromises(SQS);
 
@@ -36,13 +40,13 @@ awsSqsPromises.getQueueIdentifier(
     const queueUrl = data.QueueUrl;
     console.log(`Success! Ready to use Queue at ${queueUrl}.`);
 
-    const topicStream = require("sqs-stream");
-    const queueStream = topicStream.createReadStream({
-      "url": queueUrl,
-      "accessKeyId": config.dataQueue.config.accessKeyId,
-      "secretAccessKey": config.dataQueue.config.secretAccessKey,
-      "region": config.dataQueue.config.region
-    });
+    // const topicStream = require("sqs-stream");
+    // const queueStream = topicStream.createReadStream({
+    //   "url": queueUrl,
+    //   "accessKeyId": config.dataQueue.config.accessKeyId,
+    //   "secretAccessKey": config.dataQueue.config.secretAccessKey,
+    //   "region": config.dataQueue.config.region
+    // });
 
     // TODO: SSL Should be enabled. Would also be good if this could take an
     // already created instance of the aws object.
